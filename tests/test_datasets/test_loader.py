@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.datasets import load_iris
+from epicon.datasets import load_iris
 
 
 def test_load_iris_shape():

@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.linear_model import Ridge
+from epicon.linear_model import Ridge
 
 
 def test_ridge_fit_predict():

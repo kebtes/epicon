@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.linear_model import LogisticRegression
+from epicon.linear_model import LogisticRegression
 
 
 @pytest.fixture

@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.losses.categorical_cross_entropy import CategoricalCrossEntropy
+from epicon.losses.categorical_cross_entropy import CategoricalCrossEntropy
 
 @pytest.fixture
 def loss_fn():

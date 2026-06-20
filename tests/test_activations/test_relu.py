@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.activations.relu import ReLU
+from epicon.activations.relu import ReLU
 
 @pytest.fixture
 def relu():

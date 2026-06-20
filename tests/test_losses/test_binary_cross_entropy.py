@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.losses.binary_cross_entropy import BinaryCrossEntropy
+from epicon.losses.binary_cross_entropy import BinaryCrossEntropy
 
 
 def test_initialization():

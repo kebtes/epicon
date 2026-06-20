@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.optimizers import GradientDescent
+from epicon.optimizers import GradientDescent
 
 class DummyLayer:
     def __init__(self, weights, biases=None):

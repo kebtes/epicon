@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from nnf.layers import Dropout
+from epicon.layers import Dropout
 
 @pytest.fixture
 def sample_input():

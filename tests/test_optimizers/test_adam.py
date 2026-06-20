@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
-from nnf.layers import Dense
-from nnf.optimizers import Adam
+from epicon.layers import Dense
+from epicon.optimizers import Adam
 
 
 def test_adam_update_params():

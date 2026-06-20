@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.preprocessing import StandardScaler, MinMaxScaler
+from epicon.preprocessing import StandardScaler, MinMaxScaler
 
 
 class TestStandardScaler:

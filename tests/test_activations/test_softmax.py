@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.activations.softmax import Softmax
+from epicon.activations.softmax import Softmax
 
 @pytest.fixture
 def softmax():

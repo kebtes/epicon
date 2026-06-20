@@ -6,10 +6,10 @@ train/test split, and accuracy scoring.
 """
 
 import numpy as np
-from nnf.datasets import load_iris
-from nnf.preprocessing import train_test_split
-from nnf.metrics import accuracy_score
-from nnf.tree import DecisionTreeClassifier
+from epicon.datasets import load_iris
+from epicon.preprocessing import train_test_split
+from epicon.metrics import accuracy_score
+from epicon.tree import DecisionTreeClassifier
 
 np.random.seed(42)
 

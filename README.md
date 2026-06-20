@@ -1,4 +1,4 @@
-# NNF — Neural Network Framework
+# Epicon
 
 A **lightweight, from-scratch** machine learning library built on NumPy with
 optional Numba acceleration. Provides a unified API for neural networks
@@ -9,17 +9,17 @@ Designed to be minimal yet capable — like **Flask for ML**.
 ## Quick Start
 
 ```python
-import nnf
-from nnf.datasets import load_iris
-from nnf.preprocessing import train_test_split
-from nnf.metrics import accuracy_score
+import epicon
+from epicon.datasets import load_iris
+from epicon.preprocessing import train_test_split
+from epicon.metrics import accuracy_score
 
 # Load data
 X, y = load_iris(return_X_y=True)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 
 # Train a model
-model = nnf.DecisionTreeClassifier(max_depth=5)
+model = epicon.DecisionTreeClassifier(max_depth=5)
 model.fit(X_train, y_train)
 
 # Evaluate
@@ -55,7 +55,7 @@ print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
 # Minimal install (NumPy required)
 pip install numpy
 
-# Install NNF from source
+# Install Epicon from source
 pip install -e .
 
 # With Numba (optional, for faster tree/KNN)

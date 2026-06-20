@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.preprocessing import LabelEncoder, OneHotEncoder
+from epicon.preprocessing import LabelEncoder, OneHotEncoder
 
 
 class TestLabelEncoder:
