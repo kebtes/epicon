@@ -174,3 +174,12 @@ cython_debug/
 .pypirc
 
 .vscode/
+
+# Large data files (not shipped in repo)
+resources/mnist/
+resources/iris/
+
+# Runtime artifacts
+saved_models/
+examples/saved_models/
+.todo
