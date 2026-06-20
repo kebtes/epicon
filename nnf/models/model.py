@@ -85,7 +85,7 @@ class Model:
         for i in reversed(range(len(self.layers) - 1)):
             self.layers[i].backward(self.layers[i + 1].dinputs)
 
-    def train(self, X, y, *, epochs=1, batch_size: int = None):
+    def train(self, X, y, *, epochs=1, batch_size: int = None, validation_split: float = 0.0):
         """
         Train the model using the provided data.
 
@@ -94,32 +94,52 @@ class Model:
             y (ndarray): True labels.
             epochs (int): Number of epochs to train for.
             batch_size (int): Size of the training batches. Defaults to None.
+            validation_split (float): Fraction of data to use for validation.
+                                      Defaults to 0.0.
         """
 
-        self._X_train = X
-        self._y_train = y
-        
-        if batch_size is None:
-            batch_size = len(X)
+        # Auto-infer input dimensions if first layer has default n_inputs (1)
+        first_layer = self.layers[0] if self.layers else None
+        if first_layer and hasattr(first_layer, 'n_inputs') and first_layer.n_inputs == 1 and X.shape[1] != 1:
+            first_layer.n_inputs = X.shape[1]
 
-        steps = math.ceil(len(X) / batch_size)
+        # Validation split
+        X_train = X
+        y_train = y
+        X_val = None
+        y_val = None
+
+        if validation_split > 0:
+            split_idx = int(len(X) * (1 - validation_split))
+            X_val = X[split_idx:]
+            y_val = y[split_idx:]
+            X_train = X[:split_idx]
+            y_train = y[:split_idx]
+
+        self._X_train = X_train
+        self._y_train = y_train
+
+        if batch_size is None:
+            batch_size = len(X_train)
+
+        steps = math.ceil(len(X_train) / batch_size)
 
         for epoch in range(1, epochs + 1):
             loss = 0
 
             if self.shuffle:
-                indices = np.arange(len(X))
+                indices = np.arange(len(X_train))
                 np.random.shuffle(indices)
-                X = X[indices]
-                y = y[indices]
+                X_train = X_train[indices]
+                y_train = y_train[indices]
 
-            step_progress = tqdm(range(steps), desc= f"Epoch {epoch}", ncols=None, unit="steps")
+            step_progress = tqdm(range(steps), desc=f"Epoch {epoch}", ncols=None, unit="steps")
             for step in step_progress:
                 batch_start = step * batch_size
-                batch_end = min(batch_start + batch_size, len(X))
+                batch_end = min(batch_start + batch_size, len(X_train))
 
-                batch_x = X[batch_start:batch_end]
-                batch_y = y[batch_start:batch_end]
+                batch_x = X_train[batch_start:batch_end]
+                batch_y = y_train[batch_start:batch_end]
 
                 output = self.forward(batch_x)
 
@@ -138,11 +158,17 @@ class Model:
 
                 self.optimizer.post_update_params()
 
-
             avg_loss = loss / steps
             step_progress.set_postfix(loss=avg_loss)
             step_progress.update(1)
-            print(f"Loss: {avg_loss}")
+
+            # Validation
+            if X_val is not None and y_val is not None:
+                val_output = self.forward(X_val)
+                val_loss = self.loss.calculate(val_output, y_val)
+                print(f"Loss: {avg_loss:.6f} - val_loss: {val_loss:.6f}")
+            else:
+                print(f"Loss: {avg_loss}")
 
     def predict(self, X):
         """
