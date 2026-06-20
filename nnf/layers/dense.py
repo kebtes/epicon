@@ -10,14 +10,24 @@ class Dense(Layer):
     --------------------------------------------
     """
     
-    def __init__(self, n_inputs = 1, n_neurons = 1):
+    def __init__(self, n_inputs = 1, n_neurons = 1, activation = None):
         """
         The function initializes weights with random values and biases with zeros.
+
+        Parameters:
+            n_inputs (int): Number of input features.
+            n_neurons (int): Number of output neurons.
+            activation (str or None): Activation function to apply. When used
+                                      with Sequential, the activation layer
+                                      is automatically inserted. Supported:
+                                      'relu', 'sigmoid', 'softmax', 'tanh',
+                                      'leaky_relu'. Defaults to None.
         """
         super().__init__()
         
         self.n_inputs = n_inputs
         self.n_neurons = n_neurons
+        self._activation = activation
 
         # Dense layer have weights hense trainable
         self.trainable = True

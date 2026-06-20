@@ -101,6 +101,9 @@ def main():
         Softmax(),
     )
 
+    model.name = "Model1"
+
+
     print(y_train)
     
     # Set loss and optimizer
@@ -110,24 +113,27 @@ def main():
     )
 
     # Train the model
-    model.train(X_train, y_train, epochs=1000, batch_size=12)
+    model.train(X_train, y_train, epochs=5, batch_size=12)
 
-    print("\nMaking predictions:")
+    model.evaluate(X_test, y_test)
 
-    predictions = model.forward(X_test)
+    model.save_model()
+    # print("\nMaking predictions:")
+
+    # predictions = model.forward(X_test)
     
-    correct_pred = 0
-    for pred, act in zip(predictions, y_test):
-        # take the index of the highest probability
+    # correct_pred = 0
+    # for pred, act in zip(predictions, y_test):
+    #     # take the index of the highest probability
 
-        predicted_label = np.argmax(pred)  
-        # one-hot encoded, so we use argmax to get the true label
+    #     predicted_label = np.argmax(pred)  
+    #     # one-hot encoded, so we use argmax to get the true label
 
-        true_label = np.argmax(act)  
-        if predicted_label == true_label:
-            correct_pred += 1
+    #     true_label = np.argmax(act)  
+    #     if predicted_label == true_label:
+    #         correct_pred += 1
 
-    print(f"Accuracy: {correct_pred / len(predictions):.4f}")
+    # print(f"Accuracy: {correct_pred / len(predictions):.4f}")
 
 
 if __name__ == "__main__":

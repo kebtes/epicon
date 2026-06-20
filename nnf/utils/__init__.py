@@ -1,3 +1,4 @@
 from nnf.utils.layer_config import LAYER_REGISTERY
+from nnf.utils.model_builder import ModelBuilder
 
-__all__ = ['LAYER_REGISTERY']
+__all__ = ['LAYER_REGISTERY', 'ModelBuilder']
