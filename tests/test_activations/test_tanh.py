@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.activations.tanh import Tanh
+from epicon.activations.tanh import Tanh
 
 @pytest.fixture
 def tanh():

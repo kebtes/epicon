@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.optimizers.momentum import Momentum
+from epicon.optimizers.momentum import Momentum
 
 # Dummy layer class to mimic the real Layer object
 class DummyLayer:

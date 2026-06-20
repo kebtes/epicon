@@ -6,13 +6,13 @@ activation specification and the Adam optimizer.
 """
 
 import numpy as np
-from nnf.datasets import load_mnist
-from nnf.models import Sequential
-from nnf.layers import Dense
-from nnf.losses import CategoricalCrossEntropy
-from nnf.optimizers import Adam
-from nnf.preprocessing import train_test_split
-from nnf.metrics import accuracy_score
+from epicon.datasets import load_mnist
+from epicon.models import Sequential
+from epicon.layers import Dense
+from epicon.losses import CategoricalCrossEntropy
+from epicon.optimizers import Adam
+from epicon.preprocessing import train_test_split
+from epicon.metrics import accuracy_score
 
 np.random.seed(42)
 
@@ -20,7 +20,7 @@ X, y = load_mnist(return_X_y=True)
 X = X[:1000] / 255.0
 y = y[:1000]
 
-from nnf.preprocessing import LabelEncoder, OneHotEncoder
+from epicon.preprocessing import LabelEncoder, OneHotEncoder
 
 le = LabelEncoder()
 y_enc = le.fit_transform(y).reshape(-1, 1)

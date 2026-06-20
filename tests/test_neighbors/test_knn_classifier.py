@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.neighbors import KNeighborsClassifier
+from epicon.neighbors import KNeighborsClassifier
 
 
 @pytest.fixture

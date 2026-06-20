@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.ensemble import RandomForestRegressor
+from epicon.ensemble import RandomForestRegressor
 
 
 @pytest.fixture

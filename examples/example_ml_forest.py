@@ -6,10 +6,10 @@ feature importance analysis and R² scoring.
 """
 
 import numpy as np
-from nnf.datasets import make_regression
-from nnf.preprocessing import train_test_split
-from nnf.metrics import r2_score, mean_squared_error
-from nnf.ensemble import RandomForestRegressor
+from epicon.datasets import make_regression
+from epicon.preprocessing import train_test_split
+from epicon.metrics import r2_score, mean_squared_error
+from epicon.ensemble import RandomForestRegressor
 
 np.random.seed(42)
 

@@ -1,8 +1,8 @@
 import pytest
-from nnf.utils import ModelBuilder
-from nnf.utils import LAYER_REGISTERY
-from nnf.layers import Layer
-from nnf.models import Model
+from epicon.utils import ModelBuilder
+from epicon.utils import LAYER_REGISTERY
+from epicon.layers import Layer
+from epicon.models import Model
 
 class DummyLayer(Layer):
     def __init__(self, units=0, activation=None):

@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
+from epicon.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 
 
 class TestAccuracyScore:

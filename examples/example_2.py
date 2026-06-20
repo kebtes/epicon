@@ -45,11 +45,11 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from nnf.layers import Dense
-from nnf.activations import ReLU, Softmax
-from nnf.losses import CategoricalCrossEntropy
-from nnf.optimizers import GradientDescent, Momentum
-from nnf.models import Model
+from epicon.layers import Dense
+from epicon.activations import ReLU, Softmax
+from epicon.losses import CategoricalCrossEntropy
+from epicon.optimizers import GradientDescent, Momentum
+from epicon.models import Model
 
 np.random.seed(42)
 

@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.neighbors import KNeighborsRegressor
+from epicon.neighbors import KNeighborsRegressor
 
 
 @pytest.fixture

@@ -6,10 +6,10 @@ synthetic binary classification task.
 """
 
 import numpy as np
-from nnf.datasets import make_classification
-from nnf.preprocessing import train_test_split, StandardScaler
-from nnf.metrics import accuracy_score, f1_score
-from nnf.linear_model import LogisticRegression
+from epicon.datasets import make_classification
+from epicon.preprocessing import train_test_split, StandardScaler
+from epicon.metrics import accuracy_score, f1_score
+from epicon.linear_model import LogisticRegression
 
 np.random.seed(42)
 

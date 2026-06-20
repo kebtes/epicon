@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.tree import DecisionTreeRegressor
+from epicon.tree import DecisionTreeRegressor
 
 
 @pytest.fixture

@@ -4,11 +4,11 @@ import tempfile
 import os
 import json
 
-from nnf.layers.dense import Dense
-from nnf.losses import MSE
-from nnf.optimizers.gradient_descent import GradientDescent
-from nnf.models import Model
-from nnf.activations import ReLU, Sigmoid
+from epicon.layers.dense import Dense
+from epicon.losses import MSE
+from epicon.optimizers.gradient_descent import GradientDescent
+from epicon.models import Model
+from epicon.activations import ReLU, Sigmoid
 
 @pytest.fixture
 def mock_data():

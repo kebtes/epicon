@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.linear_model import LinearRegression
+from epicon.linear_model import LinearRegression
 
 
 @pytest.fixture

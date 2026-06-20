@@ -1,4 +1,4 @@
-from nnf.models import Model
+from epicon.models import Model
 
 model = Model.load_model("saved_models/None.json")
 

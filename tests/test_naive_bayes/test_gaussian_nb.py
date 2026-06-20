@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.naive_bayes import GaussianNB
+from epicon.naive_bayes import GaussianNB
 
 
 @pytest.fixture

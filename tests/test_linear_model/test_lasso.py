@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.linear_model import Lasso
+from epicon.linear_model import Lasso
 
 
 def test_lasso_fit_predict():

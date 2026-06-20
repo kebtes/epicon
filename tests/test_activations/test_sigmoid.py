@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.activations.sigmoid import Sigmoid
+from epicon.activations.sigmoid import Sigmoid
 
 @pytest.fixture
 def sigmoid():

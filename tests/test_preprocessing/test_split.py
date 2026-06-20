@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.preprocessing import train_test_split
+from epicon.preprocessing import train_test_split
 
 
 def test_train_test_split_default():

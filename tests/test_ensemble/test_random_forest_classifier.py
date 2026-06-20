@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.ensemble import RandomForestClassifier
+from epicon.ensemble import RandomForestClassifier
 
 
 @pytest.fixture

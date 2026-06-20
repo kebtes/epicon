@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from nnf.tree import DecisionTreeClassifier
+from epicon.tree import DecisionTreeClassifier
 
 
 @pytest.fixture
