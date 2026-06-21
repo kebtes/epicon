@@ -2,6 +2,13 @@
   <img src="BANNER.png" alt="Epicon banner" width="100%">
 </p>
 
+<p align="center">
+  <a href="https://pypi.org/project/epicon/"><img src="https://img.shields.io/pypi/v/epicon" alt="PyPI"></a>
+  <a href="https://pypi.org/project/epicon/"><img src="https://img.shields.io/pypi/pyversions/epicon" alt="Python versions"></a>
+  <a href="https://github.com/kebtes/epicon/blob/main/LICENSE"><img src="https://img.shields.io/pypi/l/epicon" alt="License"></a>
+  <a href="https://github.com/kebtes/epicon/actions/workflows/test.yml"><img src="https://img.shields.io/github/actions/workflow/status/kebtes/epicon/test.yml?label=tests" alt="Tests"></a>
+</p>
+
 [**EPICON**](https://epicon-web.vercel.app/), a **lightweight, from-scratch** machine learning library built on NumPy with optional Numba acceleration. Provides a unified API for neural networks
 **and** traditional ML models.
 
@@ -53,14 +60,14 @@ print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
 ## Installation
 
 ```bash
-# Minimal install (NumPy required)
-pip install numpy
-
-# Install Epicon from source
-pip install -e .
+# Install from PyPI
+pip install epicon
 
 # With Numba (optional, for faster tree/KNN)
-pip install numba
+pip install epicon[numba]
+
+# Or install from source
+pip install -e .
 ```
 
 ## Design
