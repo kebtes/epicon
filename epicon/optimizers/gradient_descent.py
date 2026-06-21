@@ -1,7 +1,8 @@
-from typing import Dict, override
+from typing import override
 
-from epicon.optimizers.base import Optimizer
 from epicon.layers.base import Layer
+from epicon.optimizers.base import Optimizer
+
 
 class GradientDescent(Optimizer):
     """
@@ -9,17 +10,18 @@ class GradientDescent(Optimizer):
     GRADIENT DESCENT OPTIMIZER
     --------------------------
     """
-    def __init__(self, learning_rate = 0.1, decay=0):
+
+    def __init__(self, learning_rate=0.1, decay=0):
         """
         Initialize Gradient Descent optimizer
         """
         super().__init__(learning_rate, decay)
 
-    def update_params(self, layer : Layer):
+    def update_params(self, layer: Layer):
         """
         The function updates the weights and biases of a neural network layer using the current learning
         rate.
-        
+
         """
 
         layer.weights -= self.current_learning_rate * layer.dweights
@@ -33,15 +35,9 @@ class GradientDescent(Optimizer):
 
     @override
     def get_params(self):
-        return {
-            "type"  : "GradientDescent",
-            "attrs" : {
-                "learning_rate" : self.learning_rate,
-                "decay" : self.decay
-            }
-        }
+        return {"type": "GradientDescent", "attrs": {"learning_rate": self.learning_rate, "decay": self.decay}}
 
     @override
-    def set_params(self, params : Dict):
+    def set_params(self, params: dict):
         for key, val in params.items():
             setattr(self, key, val)

@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+
 from epicon.linear_model import LinearRegression
 
 
@@ -29,7 +30,7 @@ def test_linear_regression_coefficients(simple_data):
 
 def test_linear_regression_gradient_descent(simple_data):
     X, y = simple_data
-    model = LinearRegression(method='gd', epochs=10000, learning_rate=0.05)
+    model = LinearRegression(method="gd", epochs=10000, learning_rate=0.05)
     model.fit(X, y)
     preds = model.predict(X)
     np.testing.assert_array_almost_equal(preds, y, decimal=2)

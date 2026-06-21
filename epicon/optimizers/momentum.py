@@ -1,8 +1,9 @@
-import numpy as np
-from typing import Dict, override
+from typing import override
 
-from epicon.optimizers.base import Optimizer
+import numpy as np
+
 from epicon.layers.base import Layer
+from epicon.optimizers.base import Optimizer
 
 
 class Momentum(Optimizer):
@@ -18,7 +19,7 @@ class Momentum(Optimizer):
     This implementation uses Polyak's method of updating parameters based on accumulated velocity.
     """
 
-    def __init__(self, learning_rate: int = 0.1, decay: int = 0, momentum: int = 0):
+    def __init__(self, learning_rate: float = 0.1, decay: int = 0, momentum: int = 0):
         """
         Initializes the Momentum optimizer with the given learning rate, decay, and momentum values.
 
@@ -46,38 +47,28 @@ class Momentum(Optimizer):
         if layer not in self.velocities:
             self.velocities[layer] = {
                 "weights": np.zeros_like(layer.weights),
-                "biases": (
-                    np.zeros_like(layer.biases) if layer.biases is not None else None
-                ),
+                "biases": (np.zeros_like(layer.biases) if layer.biases is not None else None),
             }
 
         # Compute and apply momentum update for weights
-        weight_velocity = (
-            self.momentum * self.velocities[layer]["weights"] + layer.dweights
-        )
+        weight_velocity = self.momentum * self.velocities[layer]["weights"] + layer.dweights
         layer.weights -= self.learning_rate * weight_velocity
         self.velocities[layer]["weights"] = weight_velocity
 
         # Compute and apply momentum update for biases if they exist
         if layer.biases is not None:
-            bias_velocity = (
-                self.momentum * self.velocities[layer]["biases"] + layer.dbiases
-            )
+            bias_velocity = self.momentum * self.velocities[layer]["biases"] + layer.dbiases
             layer.biases -= self.learning_rate * bias_velocity
             self.velocities[layer]["biases"] = bias_velocity
 
     @override
     def get_params(self):
         return {
-            "type"  : "Momentum",
-            "attrs" : {
-                "learning_rate" : self.learning_rate,
-                "decay" : self.decay,
-                "momentum" : self.momentum 
-            }
+            "type": "Momentum",
+            "attrs": {"learning_rate": self.learning_rate, "decay": self.decay, "momentum": self.momentum},
         }
 
     @override
-    def set_params(self, params : Dict):
+    def set_params(self, params: dict):
         for key, val in params.items():
             setattr(self, key, val)

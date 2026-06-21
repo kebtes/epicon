@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+
 from epicon.naive_bayes import GaussianNB
 
 

@@ -1,7 +1,9 @@
-import numpy as np
 from typing import override
 
+import numpy as np
+
 from epicon.activations.base import Activation
+
 
 class ReLU(Activation):
     """
@@ -10,6 +12,7 @@ class ReLU(Activation):
     f(x) = max(0, x)
     -----------------------------------------------
     """
+
     def forward(self, inputs):
         """
         The `forward` function takes an input array, applies a ReLU activation function element-wise,
@@ -18,7 +21,7 @@ class ReLU(Activation):
         self.inputs = inputs
         self.output = np.maximum(0, inputs)
         return self.output
-    
+
     def backward(self, dvalues):
         """
         The `backward` function calculates the derivative of the inputs with respect to the given values
@@ -31,7 +34,4 @@ class ReLU(Activation):
 
     @override
     def get_params(self):
-        return {
-            "type" : "ReLU",
-            "attrs" : {}
-        }
+        return {"type": "ReLU", "attrs": {}}

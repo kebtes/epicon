@@ -1,5 +1,5 @@
 import numpy as np
-import pytest
+
 from epicon.preprocessing import train_test_split
 
 

@@ -1,7 +1,9 @@
-import numpy as np
 from typing import override
 
+import numpy as np
+
 from epicon.activations.base import Activation
+
 
 class Sigmoid(Activation):
     """
@@ -19,7 +21,7 @@ class Sigmoid(Activation):
         self.inputs = inputs
         self.output = 1 / (1 + np.exp(-inputs))
         return self.output
-    
+
     def backward(self, dvalues):
         """
         The `backward` function calculates the derivative of the inputs based on the output and the
@@ -29,10 +31,7 @@ class Sigmoid(Activation):
         # derivative of the sigmoid: f'(x) = f(x) * (1 - f(x))
         self.dinputs = dvalues * (self.output * (1 - self.output))
         return self.dinputs
-    
+
     @override
     def get_params(self):
-        return {
-            "type" : "Sigmoid",
-            "attrs" : {}
-        }
+        return {"type": "Sigmoid", "attrs": {}}

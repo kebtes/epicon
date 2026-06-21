@@ -38,7 +38,7 @@ class KNeighborsRegressor:
         array([2.666...])
     """
 
-    def __init__(self, n_neighbors: int = 5, metric: str = 'euclidean', weights: str = 'uniform'):
+    def __init__(self, n_neighbors: int = 5, metric: str = "euclidean", weights: str = "uniform"):
         self.n_neighbors = n_neighbors
         self.metric = metric
         self.weights = weights
@@ -88,19 +88,19 @@ class KNeighborsRegressor:
         Returns:
             float: Predicted value.
         """
-        if self.metric == 'euclidean':
+        if self.metric == "euclidean":
             distances = np.sqrt(np.sum((self.X_train - x) ** 2, axis=1))
-        elif self.metric == 'manhattan':
+        elif self.metric == "manhattan":
             distances = np.sum(np.abs(self.X_train - x), axis=1)
         else:
             raise ValueError(f"Unknown metric '{self.metric}'. Use 'euclidean' or 'manhattan'.")
 
-        nearest_indices = np.argsort(distances)[:self.n_neighbors]
+        nearest_indices = np.argsort(distances)[: self.n_neighbors]
         nearest_values = self.y_train[nearest_indices]
 
-        if self.weights == 'uniform':
+        if self.weights == "uniform":
             return np.mean(nearest_values)
-        elif self.weights == 'distance':
+        elif self.weights == "distance":
             k_distances = distances[nearest_indices] + 1e-15
             weights = 1.0 / k_distances
             return np.average(nearest_values, weights=weights)

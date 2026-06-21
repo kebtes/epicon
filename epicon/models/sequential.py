@@ -8,18 +8,18 @@ that automatically inserts activation layers when activations
 are specified as strings or passed alongside Dense layers.
 """
 
-from epicon.models import Model
+from epicon.activations import LeakyReLU, ReLU, Sigmoid, Softmax, Tanh
 from epicon.layers import Dense
-from epicon.activations import ReLU, Sigmoid, Softmax, Tanh, LeakyReLU
+from epicon.models import Model
 
 # Activation string to class mapping
 _ACTIVATION_MAP = {
-    'relu': ReLU,
-    'sigmoid': Sigmoid,
-    'softmax': Softmax,
-    'tanh': Tanh,
-    'leaky_relu': LeakyReLU,
-    'leakyrelu': LeakyReLU,
+    "relu": ReLU,
+    "sigmoid": Sigmoid,
+    "softmax": Softmax,
+    "tanh": Tanh,
+    "leaky_relu": LeakyReLU,
+    "leakyrelu": LeakyReLU,
 }
 
 
@@ -87,12 +87,12 @@ class Sequential(Model):
         for layer in layers:
             if isinstance(layer, Dense):
                 # Extract activation from Dense if specified as string
-                if hasattr(layer, '_activation') and layer._activation:
+                if hasattr(layer, "_activation") and layer._activation:
                     processed.append(layer)
                     activation_cls = _ACTIVATION_MAP.get(layer._activation.lower())
                     if activation_cls:
                         processed.append(activation_cls())
-                    delattr(layer, '_activation')
+                    delattr(layer, "_activation")
                 else:
                     processed.append(layer)
             elif isinstance(layer, str):

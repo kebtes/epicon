@@ -114,7 +114,7 @@ class LogisticRegression:
         w = np.zeros(n_params)
         prev_loss = np.inf
 
-        for epoch in range(self.epochs):
+        for _epoch in range(self.epochs):
             logits = X_aug @ w
             y_pred = self._sigmoid(logits)
 
@@ -129,10 +129,10 @@ class LogisticRegression:
             gradient = (1.0 / n_samples) * (X_aug.T @ (y_pred - y))
 
             # Regularization (skip bias term if fit_intercept)
-            if self.penalty == 'l2':
+            if self.penalty == "l2":
                 reg_start = 1 if self.fit_intercept else 0
                 gradient[reg_start:] += (1.0 / self.C) * w[reg_start:] / n_samples
-            elif self.penalty == 'l1':
+            elif self.penalty == "l1":
                 reg_start = 1 if self.fit_intercept else 0
                 gradient[reg_start:] += (1.0 / self.C) * np.sign(w[reg_start:]) / n_samples
 

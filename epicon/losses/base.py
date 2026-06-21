@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class Loss:
     """
     --------------------------------
@@ -22,7 +23,7 @@ class Loss:
         # mean loss accross all the samples in the batch
         data_loss = np.mean(sample_losses)
         return data_loss
-    
+
     def forward(self, y_pred, y_true):
         """
         Forward pass to calculate the loss
@@ -30,11 +31,11 @@ class Loss:
         """
 
         raise NotImplementedError
-    
+
     def backward(self, dvalues, y_true):
         """
         Backward pass to calculate gradients
-        
+
         """
 
         raise NotImplementedError

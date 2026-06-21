@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+
 from epicon.tree import DecisionTreeClassifier
 
 
@@ -22,7 +23,7 @@ def test_decision_tree_classifier_fit_predict(simple_data):
 
 def test_decision_tree_classifier_entropy(simple_data):
     X, y = simple_data
-    model = DecisionTreeClassifier(criterion='entropy', max_depth=3)
+    model = DecisionTreeClassifier(criterion="entropy", max_depth=3)
     model.fit(X, y)
     assert model.score(X, y) > 0.8
 

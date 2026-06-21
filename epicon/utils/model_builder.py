@@ -1,7 +1,8 @@
-from typing import List, Dict, Any
+from typing import Any
 
-from epicon.utils import LAYER_REGISTERY
 from epicon.layers import Layer
+from epicon.utils import LAYER_REGISTERY
+
 
 class ModelBuilder:
     """
@@ -14,9 +15,9 @@ class ModelBuilder:
         """
         Initializes the ModelBuilder instance with an empty list of layers.
         """
-        self.layers: List[Layer] = []
+        self.layers: list[Layer] = []
 
-    def build(self, config: List[Dict[str, Any]]):
+    def build(self, config: list[dict[str, Any]]):
         """
         Builds a model from a given configuration list.
 
@@ -37,8 +38,8 @@ class ModelBuilder:
             self.layers.append(layer_instance)
 
         return self.__build_model(self.layers)
-    
-    def __build_model(self, layers: List[Layer]):
+
+    def __build_model(self, layers: list[Layer]):
         """
         Internal method to construct a Model object from a list of layers.
 
@@ -49,4 +50,5 @@ class ModelBuilder:
             Model: A Model composed of the provided layers.
         """
         from epicon.models import Model
+
         return Model(*layers)

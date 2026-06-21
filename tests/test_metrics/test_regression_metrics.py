@@ -1,6 +1,4 @@
-import numpy as np
-import pytest
-from epicon.metrics import mean_squared_error, mean_absolute_error, r2_score
+from epicon.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 
 class TestMeanSquaredError:

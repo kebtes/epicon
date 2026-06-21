@@ -12,7 +12,8 @@ as the splitting criterion.
 """
 
 import numpy as np
-from epicon._jit import _best_split_numeric, _mse_split
+
+from epicon._jit import _best_split_numeric
 
 
 class _RegNode:
@@ -27,6 +28,7 @@ class _RegNode:
         value (float): Predicted value for leaf nodes.
         is_leaf (bool): Whether this node is a leaf.
     """
+
     def __init__(self, feature_idx=None, threshold=None, left=None, right=None, value=None, is_leaf=False):
         self.feature_idx = feature_idx
         self.threshold = threshold
@@ -74,17 +76,17 @@ class DecisionTreeRegressor:
 
     def __init__(
         self,
-        criterion: str = 'mse',
+        criterion: str = "mse",
         max_depth: int = None,
         min_samples_split: int = 2,
         min_samples_leaf: int = 1,
         max_features: int = None,
         random_state: int = None,
     ):
-        if criterion not in ('mse', 'mae'):
+        if criterion not in ("mse", "mae"):
             raise ValueError(f"criterion must be 'mse' or 'mae', got '{criterion}'")
         self.criterion = criterion
-        self.max_depth = max_depth if max_depth is not None else float('inf')
+        self.max_depth = max_depth if max_depth is not None else float("inf")
         self.min_samples_split = min_samples_split
         self.min_samples_leaf = min_samples_leaf
         self.max_features = max_features
@@ -158,10 +160,9 @@ class DecisionTreeRegressor:
             X_sorted = X_column[sort_idx]
             y_sorted = y[sort_idx]
 
-            if self.criterion == 'mse':
+            if self.criterion == "mse":
                 threshold, score = _best_split_numeric(
-                    X_sorted, y_sorted, 1, 'mse',
-                    self.min_samples_split, self.min_samples_leaf
+                    X_sorted, y_sorted, 1, "mse", self.min_samples_split, self.min_samples_leaf
                 )
             else:
                 # MAE criterion

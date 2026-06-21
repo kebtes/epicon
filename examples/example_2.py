@@ -45,13 +45,14 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from epicon.layers import Dense
 from epicon.activations import ReLU, Softmax
+from epicon.layers import Dense
 from epicon.losses import CategoricalCrossEntropy
-from epicon.optimizers import GradientDescent, Momentum
 from epicon.models import Model
+from epicon.optimizers import Momentum
 
 np.random.seed(42)
+
 
 def one_hot_encode(labels, num_classes=10):
     """
@@ -61,6 +62,7 @@ def one_hot_encode(labels, num_classes=10):
     one_hot = np.zeros((labels.size, num_classes))
     one_hot[np.arange(labels.size), labels] = 1
     return one_hot
+
 
 def main():
     base_path = Path(__file__).resolve().parent.parent
@@ -90,7 +92,6 @@ def main():
     y_train = one_hot_encode(y_train.flatten(), num_classes=10)
     y_test = one_hot_encode(y_test.flatten(), num_classes=10)
 
-
     # Build the model
     model = Model(
         Dense(X_train.shape[1], 64),
@@ -103,9 +104,8 @@ def main():
 
     model.name = "Model1"
 
-
     print(y_train)
-    
+
     # Set loss and optimizer
     model.set(
         loss=CategoricalCrossEntropy(),
@@ -121,15 +121,15 @@ def main():
     # print("\nMaking predictions:")
 
     # predictions = model.forward(X_test)
-    
+
     # correct_pred = 0
     # for pred, act in zip(predictions, y_test):
     #     # take the index of the highest probability
 
-    #     predicted_label = np.argmax(pred)  
+    #     predicted_label = np.argmax(pred)
     #     # one-hot encoded, so we use argmax to get the true label
 
-    #     true_label = np.argmax(act)  
+    #     true_label = np.argmax(act)
     #     if predicted_label == true_label:
     #         correct_pred += 1
 

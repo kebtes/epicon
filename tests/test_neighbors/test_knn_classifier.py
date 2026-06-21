@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+
 from epicon.neighbors import KNeighborsClassifier
 
 
@@ -29,7 +30,7 @@ def test_knn_classifier_k1(simple_data):
 
 def test_knn_classifier_manhattan(simple_data):
     X, y = simple_data
-    model = KNeighborsClassifier(n_neighbors=1, metric='manhattan')
+    model = KNeighborsClassifier(n_neighbors=1, metric="manhattan")
     model.fit(X, y)
     preds = model.predict(X)
     np.testing.assert_array_equal(preds, y)
@@ -46,7 +47,7 @@ def test_knn_classifier_predict_proba(simple_data):
 
 def test_knn_classifier_distance_weighted(simple_data):
     X, y = simple_data
-    model = KNeighborsClassifier(n_neighbors=3, weights='distance')
+    model = KNeighborsClassifier(n_neighbors=3, weights="distance")
     model.fit(X, y)
     preds = model.predict(X)
     assert preds.shape == y.shape

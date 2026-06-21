@@ -1,12 +1,11 @@
+import json
 import math
-import numpy as np
-from typing import List, Dict
 import os
 from datetime import datetime
-import json
 
-from tqdm import tqdm
+import numpy as np
 from tabulate import tabulate
+from tqdm import tqdm
 
 from epicon.layers.base import Layer
 from epicon.losses.base import Loss
@@ -14,14 +13,15 @@ from epicon.optimizers.base import Optimizer
 from epicon.utils import LAYER_REGISTERY
 
 """
-This module defines a neural network Model class that combines layers and 
+This module defines a neural network Model class that combines layers and
 handles the training, forward pass, and backward pass operations.
 """
+
 
 class Model:
     """
     --------------------------------------------------------------
-    A Neural Network Model class that handles layers, training, 
+    A Neural Network Model class that handles layers, training,
     forward pass, backward pass, and prediction.
     --------------------------------------------------------------
     """
@@ -34,10 +34,10 @@ class Model:
             layers (Layer): Layers to be included in the model.
         """
         self.name = name
-        self.layers: List[Layer] = list(layers)
+        self.layers: list[Layer] = list(layers)
 
-        self.loss: Loss = None
-        self.optimizer: Optimizer = None
+        self.loss: Loss | None = None
+        self.optimizer: Optimizer | None = None
 
         self.clip_value = 1.0
         self.shuffle = False
@@ -100,7 +100,7 @@ class Model:
 
         # Auto-infer input dimensions if first layer has default n_inputs (1)
         first_layer = self.layers[0] if self.layers else None
-        if first_layer and hasattr(first_layer, 'n_inputs') and first_layer.n_inputs == 1 and X.shape[1] != 1:
+        if first_layer and hasattr(first_layer, "n_inputs") and first_layer.n_inputs == 1 and X.shape[1] != 1:
             first_layer.n_inputs = X.shape[1]
 
         # Validation split
@@ -183,10 +183,10 @@ class Model:
 
         self._predictions = self.forward(X)
         return self._predictions
-    
+
     def summary(self):
         """
-        Prints a summary of the model, including details of each layer and 
+        Prints a summary of the model, including details of each layer and
         the total parameters in the model.
 
         The summary includes:
@@ -202,9 +202,7 @@ class Model:
         model_summary = []
 
         # Add the input layer to the summary
-        model_summary.append([
-            "Input", f"(None, {self.layers[0].n_inputs})", "0"
-        ])
+        model_summary.append(["Input", f"(None, {self.layers[0].n_inputs})", "0"])
 
         total_params = 0
         prev_output = self.layers[0].n_neurons
@@ -216,11 +214,7 @@ class Model:
                 total_params += layer.params
 
             # Append layer information to model summary
-            model_summary.append([
-                layer.name,
-                f"(None, {prev_output})",
-                0 if not layer.trainable else layer.params
-            ])
+            model_summary.append([layer.name, f"(None, {prev_output})", 0 if not layer.trainable else layer.params])
 
             # Update prev_output for the next layer
             prev_output = layer.n_neurons
@@ -228,7 +222,7 @@ class Model:
         # Print the model summary
         self._print_summary(header, model_summary, total_params, prev_output)
 
-    def _print_summary(self, header: List, model_summary: List, total_params: int, prev_output: int):
+    def _print_summary(self, header: list, model_summary: list, total_params: int, prev_output: int):
         """
         Prints the formatted summary of the model, including the table of layers
         and the total number of parameters, along with additional details like loss function.
@@ -250,7 +244,7 @@ class Model:
             tablefmt="double_grid",
             numalign="right",
             stralign="center",
-            colalign=("center", "center", "center")
+            colalign=("center", "center", "center"),
         )
         print(table)
 
@@ -258,15 +252,15 @@ class Model:
         print(f"\nTotal Layers: {len(self.layers)}")
         print(f"Total parameters: {total_params:,}")  # Formatting the total parameters with commas
         print(f"Loss: {self.loss.name}")
-    
+
     def evaluate(self, X_test, y_test):
         """
         Evaluate the model on both training and test data.
-    
-        This method performs a forward pass using the model's training data 
-        and the provided test data, calculates the loss, accuracy, and precision 
+
+        This method performs a forward pass using the model's training data
+        and the provided test data, calculates the loss, accuracy, and precision
         for each, and displays the results in a formatted table.
-    
+
         The evaluation metrics include:
             - Training Loss
             - Training Accuracy (percentage)
@@ -274,11 +268,11 @@ class Model:
             - Test Loss
             - Test Accuracy (percentage)
             - Test Precision (percentage)
-    
+
         Parameters:
             X_test (ndarray): Input features for the test dataset.
             y_test (ndarray): True labels for the test dataset.
-    
+
         Returns:
             dict: A dictionary containing all evaluation metrics:
                 {
@@ -303,12 +297,12 @@ class Model:
         test_prec = self._calculate_precision(test_output, y_test) * 100
 
         evaluation_summary = [
-            ["Training Loss"        , train_loss],
-            ["Training Accuracy"    , train_acc],
-            ["Training Precision"   , train_prec],
-            ["Test Loss"            , test_loss],
-            ["Test Accuracy"        , test_acc],
-            ["Test Precision"       , test_prec],
+            ["Training Loss", train_loss],
+            ["Training Accuracy", train_acc],
+            ["Training Precision", train_prec],
+            ["Test Loss", test_loss],
+            ["Test Accuracy", test_acc],
+            ["Test Precision", test_prec],
         ]
 
         table = tabulate(
@@ -316,18 +310,18 @@ class Model:
             tablefmt="double_grid",
             numalign="right",
             stralign="center",
-            colalign=("center", "center")
+            colalign=("center", "center"),
         )
 
         print(table)
-        
+
         return {
             "train_loss": train_loss,
             "train_acc": train_acc,
-            "train_precision": train_prec,  
+            "train_precision": train_prec,
             "test_loss": test_loss,
             "test_acc": test_acc,
-            "test_precision": test_prec,  
+            "test_precision": test_prec,
         }
 
     def _calculate_accuracy(self, output, y_true):
@@ -353,7 +347,7 @@ class Model:
             accuracy = np.mean(predictions == true_classes)
 
         return accuracy
-    
+
     def _calculate_precision(self, output, y_true):
         """
         Calculate precision on the loss function.
@@ -398,7 +392,7 @@ class Model:
 
         precision = np.mean(ppc)
         return precision
-    
+
     def get_model_attrs(self):
         """
         Retrieves the model's attribute values.
@@ -413,14 +407,14 @@ class Model:
         """
 
         return {
-            "name"       : self.name,
-            "loss"       : self.loss.name,
-            "optimizer"  : self.optimizer.get_params(),
-            "clip_value" : self.clip_value,
-            "shuffle"    : self.shuffle
+            "name": self.name,
+            "loss": self.loss.name,
+            "optimizer": self.optimizer.get_params(),
+            "clip_value": self.clip_value,
+            "shuffle": self.shuffle,
         }
-    
-    def set_model_attrs(self, attrs : Dict):
+
+    def set_model_attrs(self, attrs: dict):
         """
         Sets the model's attributes from the provided dictionary.
 
@@ -439,7 +433,7 @@ class Model:
                 setattr(self, key, LAYER_REGISTERY[val]())
             else:
                 setattr(self, key, val)
-    
+
     def __default_model_path(self):
         """
         Generates the default file path for saving the model.
@@ -454,10 +448,10 @@ class Model:
 
         if not self.name:
             model_name = datetime.now().strftime("model_%Y%m%d_%H%M%S")
-        
+
         return f"saved_models/{model_name}.json"
-    
-    def save_model(self, *, file_path : str = None):
+
+    def save_model(self, *, file_path: str = None):
         """
         Saves the model to a JSON file.
 
@@ -473,8 +467,8 @@ class Model:
                 return obj.tolist()
 
             return obj
-            
-        model_attrs = [] 
+
+        model_attrs = []
         layer_attrs = []
 
         if not file_path:
@@ -482,28 +476,22 @@ class Model:
 
         for layer in self.layers:
             attr = layer.get_params()
-            
-            layer_attrs.append({
-                "type": attr["type"],
-                "attrs": {k: convert_types(v) for k, v in attr.get("attrs", {}).items()}
-            })
+
+            layer_attrs.append(
+                {"type": attr["type"], "attrs": {k: convert_types(v) for k, v in attr.get("attrs", {}).items()}}
+            )
 
         model_attrs = self.get_model_attrs()
-        
-        data = [
-            {
-                "model": model_attrs,
-                "layers": layer_attrs
-            }
-        ]
-            
+
+        data = [{"model": model_attrs, "layers": layer_attrs}]
+
         with open(file_path, "w") as f:
             json.dump(data, f, indent=2)
 
         print(f"Model saved to {file_path}")
-    
+
     @staticmethod
-    def load_model(file_path : str):
+    def load_model(file_path: str):
         """
         Loads a model from a JSON file.
 
@@ -520,7 +508,7 @@ class Model:
         """
 
         try:
-            with open(file_path, "r") as f:
+            with open(file_path) as f:
                 data = json.load(f)
 
             data = data[0]
@@ -534,7 +522,7 @@ class Model:
 
                 attrs = layer["attrs"] if layer["attrs"] else {}
 
-                obj : Layer = LAYER_REGISTERY[layer_type]()
+                obj: Layer = LAYER_REGISTERY[layer_type]()
                 obj.set_params(attrs)
 
                 layers.append(obj)
@@ -548,13 +536,14 @@ class Model:
             model.set_model_attrs(model_attrs)
 
             return model
-        
+
         except FileNotFoundError as e:
-            raise FileNotFoundError(f"Failed to load model. The model at '{file_path}' could not be found! - {e}")
-            
+            raise FileNotFoundError(
+                f"Failed to load model. The model at '{file_path}' could not be found! - {e}"
+            ) from e
+
         except json.JSONDecodeError as e:
-            raise json.JSONDecodeError(f"Error: Invalid JSON - {e}", e.doc, e.pos)
-        
+            raise json.JSONDecodeError(f"Error: Invalid JSON - {e}", e.doc, e.pos) from e
+
         except PermissionError:
-            raise PermissionError(f"Error loading Model. You don't have permission to read '{file_path}'")
-            
+            raise PermissionError(f"Error loading Model. You don't have permission to read '{file_path}'") from None

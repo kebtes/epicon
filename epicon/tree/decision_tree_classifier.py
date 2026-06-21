@@ -13,6 +13,7 @@ as splitting criteria.
 """
 
 import numpy as np
+
 from epicon._jit import _best_split_numeric
 
 
@@ -28,6 +29,7 @@ class _Node:
         value (any): Predicted value (class) for leaf nodes.
         is_leaf (bool): Whether this node is a leaf.
     """
+
     def __init__(self, feature_idx=None, threshold=None, left=None, right=None, value=None, is_leaf=False):
         self.feature_idx = feature_idx
         self.threshold = threshold
@@ -77,17 +79,17 @@ class DecisionTreeClassifier:
 
     def __init__(
         self,
-        criterion: str = 'gini',
+        criterion: str = "gini",
         max_depth: int = None,
         min_samples_split: int = 2,
         min_samples_leaf: int = 1,
         max_features: int = None,
         random_state: int = None,
     ):
-        if criterion not in ('gini', 'entropy'):
+        if criterion not in ("gini", "entropy"):
             raise ValueError(f"criterion must be 'gini' or 'entropy', got '{criterion}'")
         self.criterion = criterion
-        self.max_depth = max_depth if max_depth is not None else float('inf')
+        self.max_depth = max_depth if max_depth is not None else float("inf")
         self.min_samples_split = min_samples_split
         self.min_samples_leaf = min_samples_leaf
         self.max_features = max_features
@@ -170,8 +172,7 @@ class DecisionTreeClassifier:
             y_sorted = y[sort_idx]
 
             threshold, score = _best_split_numeric(
-                X_sorted, y_sorted, n_classes, self.criterion,
-                self.min_samples_split, self.min_samples_leaf
+                X_sorted, y_sorted, n_classes, self.criterion, self.min_samples_split, self.min_samples_leaf
             )
 
             if score < best_score:
@@ -217,8 +218,8 @@ class DecisionTreeClassifier:
         probs = counts / len(y)
         probs = probs[probs > 0]
 
-        if self.criterion == 'gini':
-            return 1.0 - np.sum(probs ** 2)
+        if self.criterion == "gini":
+            return 1.0 - np.sum(probs**2)
         else:
             return -np.sum(probs * np.log2(probs))
 

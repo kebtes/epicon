@@ -143,10 +143,10 @@ class LinearRegression:
         w = np.zeros(n_features)
         prev_loss = np.inf
 
-        for epoch in range(self.epochs):
+        for _epoch in range(self.epochs):
             y_pred = X_aug @ w
             error = y_pred - y
-            loss = np.mean(error ** 2)
+            loss = np.mean(error**2)
 
             if abs(prev_loss - loss) < self.tol:
                 break

@@ -6,13 +6,14 @@ activation specification and the Adam optimizer.
 """
 
 import numpy as np
+
 from epicon.datasets import load_mnist
-from epicon.models import Sequential
 from epicon.layers import Dense
 from epicon.losses import CategoricalCrossEntropy
+from epicon.metrics import accuracy_score
+from epicon.models import Sequential
 from epicon.optimizers import Adam
 from epicon.preprocessing import train_test_split
-from epicon.metrics import accuracy_score
 
 np.random.seed(42)
 
@@ -30,11 +31,13 @@ y_ohe = ohe.fit_transform(y_enc)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y_ohe, test_size=0.2, random_state=42)
 
-model = Sequential([
-    Dense(X_train.shape[1], 64, activation='relu'),
-    Dense(64, 32, activation='relu'),
-    Dense(32, 10, activation='softmax'),
-])
+model = Sequential(
+    [
+        Dense(X_train.shape[1], 64, activation="relu"),
+        Dense(64, 32, activation="relu"),
+        Dense(32, 10, activation="softmax"),
+    ]
+)
 
 model.compile(loss=CategoricalCrossEntropy(), optimizer=Adam(learning_rate=0.001))
 model.fit(X_train, y_train, epochs=10, batch_size=32, validation_split=0.1)
