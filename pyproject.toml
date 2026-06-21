@@ -1,0 +1,81 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "epicon"
+dynamic = ["version"]
+description = "Lightweight from-scratch ML library — neural nets, tree-based models, linear models, and more"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [
+    { name = "Kebtes", email = "kebtes@pm.me" },
+]
+keywords = ["machine-learning", "neural-networks", "decision-trees", "numpy", "ml-library"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "numpy>=1.21",
+]
+
+[project.optional-dependencies]
+numba = ["numba>=0.56"]
+all = ["epicon[numba]"]
+
+[project.urls]
+Homepage = "https://github.com/kebtes/epicon"
+Repository = "https://github.com/kebtes/epicon"
+Documentation = "https://github.com/kebtes/epicon#readme"
+Changelog = "https://github.com/kebtes/epicon/blob/main/CHANGELOG.md"
+"Bug Tracker" = "https://github.com/kebtes/epicon/issues"
+
+[tool.setuptools.dynamic]
+version = { attr = "epicon.__version__" }
+
+[tool.setuptools.packages.find]
+include = ["epicon*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+filterwarnings = [
+    "ignore:overflow encountered in exp",
+]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B"]
+ignore = [
+    "B008",  # do not perform function calls in dataclass defaults
+    "N806",  # X, y uppercase is standard ML convention
+    "N803",  # argument name 'X' uppercase is standard ML convention
+]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "F403"]
+"examples/*" = ["E402"]
+"tests/*" = ["E402", "E501"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+check_untyped_defs = false
+warn_unused_ignores = true
+no_implicit_optional = false
+disable_error_code = ["attr-defined", "var-annotated", "union-attr"]

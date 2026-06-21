@@ -12,6 +12,7 @@ import numpy as np
 
 try:
     import numba as nb
+
     HAS_NUMBA = True
 except ImportError:
     HAS_NUMBA = False
@@ -30,6 +31,7 @@ def _jit_if_available(func=None, *, nopython=True, parallel=False, **kwargs):
         @_jit_if_available(nopython=True, parallel=True)
         def my_func(x): ...
     """
+
     def decorator(f):
         if HAS_NUMBA:
             return nb.jit(f, nopython=nopython, parallel=parallel, **kwargs)
@@ -43,6 +45,7 @@ def _jit_if_available(func=None, *, nopython=True, parallel=False, **kwargs):
 # ---------------------------------------------------------------------------
 # Tree split helpers
 # ---------------------------------------------------------------------------
+
 
 @_jit_if_available
 def _gini_impurity(left_counts, right_counts, total_left, total_right, total_samples):
@@ -161,9 +164,9 @@ def _best_split_numeric(X_column, y, num_classes, criterion, min_samples_split, 
         if left_count < min_samples_leaf or right_count < min_samples_leaf:
             continue
 
-        if criterion == 'mse':
+        if criterion == "mse":
             score = _mse_split(y[left_mask], y[right_mask])
-        elif criterion in ('gini', 'entropy'):
+        elif criterion in ("gini", "entropy"):
             left_y = y[left_mask].astype(np.int64)
             right_y = y[right_mask].astype(np.int64)
 
@@ -174,7 +177,7 @@ def _best_split_numeric(X_column, y, num_classes, criterion, min_samples_split, 
                 left_counts[c] = np.sum(left_y == c)
                 right_counts[c] = np.sum(right_y == c)
 
-            if criterion == 'gini':
+            if criterion == "gini":
                 score = _gini_impurity(left_counts, right_counts, left_count, right_count, n)
             else:
                 score = _entropy_impurity(left_counts, right_counts, left_count, right_count, n)
@@ -191,6 +194,7 @@ def _best_split_numeric(X_column, y, num_classes, criterion, min_samples_split, 
 # ---------------------------------------------------------------------------
 # KNN distance helpers
 # ---------------------------------------------------------------------------
+
 
 @_jit_if_available
 def _euclidean_distance(x1, x2):
@@ -210,7 +214,7 @@ def _manhattan_distance(x1, x2):
 
 
 @_jit_if_available
-def _knn_predict_single(x_test, X_train, y_train, k, metric='euclidean'):
+def _knn_predict_single(x_test, X_train, y_train, k, metric="euclidean"):
     """
     Predict label for a single test point using KNN.
 
@@ -228,7 +232,7 @@ def _knn_predict_single(x_test, X_train, y_train, k, metric='euclidean'):
     distances = np.zeros(n_train)
 
     for i in range(n_train):
-        if metric == 'euclidean':
+        if metric == "euclidean":
             distances[i] = _euclidean_distance(x_test, X_train[i])
         else:
             distances[i] = _manhattan_distance(x_test, X_train[i])

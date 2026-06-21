@@ -1,6 +1,6 @@
 import numpy as np
-import pytest
-from epicon.datasets import make_regression, make_classification
+
+from epicon.datasets import make_classification, make_regression
 
 
 class TestMakeRegression:

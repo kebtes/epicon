@@ -123,7 +123,7 @@ class Lasso:
         w = np.zeros(n_features)
 
         # Coordinate descent
-        for iteration in range(self.max_iter):
+        for _iteration in range(self.max_iter):
             w_prev = w.copy()
 
             for j in range(n_features):

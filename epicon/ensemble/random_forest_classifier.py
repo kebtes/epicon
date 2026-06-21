@@ -11,6 +11,7 @@ split, which decorrelates the trees and improves generalization.
 """
 
 import numpy as np
+
 from epicon.tree.decision_tree_classifier import DecisionTreeClassifier
 
 
@@ -58,7 +59,7 @@ class RandomForestClassifier:
         max_depth: int = None,
         min_samples_split: int = 2,
         min_samples_leaf: int = 1,
-        max_features: str = 'sqrt',
+        max_features: str = "sqrt",
         bootstrap: bool = True,
         random_state: int = None,
         n_jobs: int = 1,
@@ -87,11 +88,11 @@ class RandomForestClassifier:
         """
         if self.max_features is None:
             return n_features
-        elif self.max_features == 'sqrt':
+        elif self.max_features == "sqrt":
             return max(1, int(np.sqrt(n_features)))
-        elif self.max_features == 'log2':
+        elif self.max_features == "log2":
             return max(1, int(np.log2(n_features)))
-        elif isinstance(self.max_features, (int, float)):
+        elif isinstance(self.max_features, int | float):
             return max(1, int(self.max_features))
         else:
             return n_features
@@ -121,7 +122,7 @@ class RandomForestClassifier:
 
         for i in range(self.n_estimators):
             tree = DecisionTreeClassifier(
-                criterion='gini',
+                criterion="gini",
                 max_depth=self.max_depth,
                 min_samples_split=self.min_samples_split,
                 min_samples_leaf=self.min_samples_leaf,
@@ -142,9 +143,7 @@ class RandomForestClassifier:
             self.estimators_.append(tree)
 
         # Compute feature importances as the average across all trees
-        self.feature_importances_ = np.mean(
-            [tree.feature_importances_ for tree in self.estimators_], axis=0
-        )
+        self.feature_importances_ = np.mean([tree.feature_importances_ for tree in self.estimators_], axis=0)
 
         return self
 

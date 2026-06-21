@@ -27,50 +27,50 @@ Quick Start:
 # ---------------------------------------------------------------------------
 # Neural Network Components
 # ---------------------------------------------------------------------------
-from epicon.models import Model, Sequential
-from epicon.layers import Dense, Dropout, Conv1D, Layer
-from epicon.activations import ReLU, LeakyReLU, Sigmoid, Softmax, Tanh, Activation
-from epicon.losses import MSE, BinaryCrossEntropy, CategoricalCrossEntropy, Loss
-from epicon.optimizers import GradientDescent, Momentum, Adam, Optimizer
-
-# ---------------------------------------------------------------------------
-# Traditional ML Models
-# ---------------------------------------------------------------------------
-from epicon.linear_model import LinearRegression
-from epicon.linear_model import LogisticRegression
-from epicon.linear_model import Ridge
-from epicon.linear_model import Lasso
-from epicon.neighbors import KNeighborsClassifier, KNeighborsRegressor
-from epicon.naive_bayes import GaussianNB
-from epicon.tree import DecisionTreeClassifier, DecisionTreeRegressor
-from epicon.ensemble import RandomForestClassifier, RandomForestRegressor
-
-# ---------------------------------------------------------------------------
-# Preprocessing & Utilities
-# ---------------------------------------------------------------------------
-from epicon.preprocessing import StandardScaler, MinMaxScaler
-from epicon.preprocessing import LabelEncoder, OneHotEncoder
-from epicon.preprocessing import train_test_split
+from epicon.activations import Activation, LeakyReLU, ReLU, Sigmoid, Softmax, Tanh
 
 # ---------------------------------------------------------------------------
 # Datasets
 # ---------------------------------------------------------------------------
-from epicon.datasets import load_iris, load_mnist
-from epicon.datasets import make_classification, make_regression
+from epicon.datasets import load_iris, load_mnist, make_classification, make_regression
+from epicon.ensemble import RandomForestClassifier, RandomForestRegressor
+from epicon.layers import Conv1D, Dense, Dropout, Layer
+
+# ---------------------------------------------------------------------------
+# Traditional ML Models
+# ---------------------------------------------------------------------------
+from epicon.linear_model import Lasso, LinearRegression, LogisticRegression, Ridge
+from epicon.losses import MSE, BinaryCrossEntropy, CategoricalCrossEntropy, Loss
 
 # ---------------------------------------------------------------------------
 # Metrics
 # ---------------------------------------------------------------------------
 from epicon.metrics import (
     accuracy_score,
-    precision_score,
-    recall_score,
-    f1_score,
     confusion_matrix,
-    mean_squared_error,
+    f1_score,
     mean_absolute_error,
+    mean_squared_error,
+    precision_score,
     r2_score,
+    recall_score,
 )
+from epicon.models import Model, Sequential
+from epicon.naive_bayes import GaussianNB
+from epicon.neighbors import KNeighborsClassifier, KNeighborsRegressor
+from epicon.optimizers import Adam, GradientDescent, Momentum, Optimizer
+
+# ---------------------------------------------------------------------------
+# Preprocessing & Utilities
+# ---------------------------------------------------------------------------
+from epicon.preprocessing import (
+    LabelEncoder,
+    MinMaxScaler,
+    OneHotEncoder,
+    StandardScaler,
+    train_test_split,
+)
+from epicon.tree import DecisionTreeClassifier, DecisionTreeRegressor
 
 # ---------------------------------------------------------------------------
 # Version

@@ -1,5 +1,5 @@
 import numpy as np
-import pytest
+
 from epicon.datasets import load_iris
 
 

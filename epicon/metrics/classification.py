@@ -59,7 +59,7 @@ def confusion_matrix(y_true, y_pred, labels=None):
     n_classes = len(labels)
     matrix = np.zeros((n_classes, n_classes), dtype=np.int64)
 
-    for t, p in zip(y_true, y_pred):
+    for t, p in zip(y_true, y_pred, strict=False):
         i = label_to_idx.get(t, -1)
         j = label_to_idx.get(p, -1)
         if i >= 0 and j >= 0:
@@ -68,7 +68,7 @@ def confusion_matrix(y_true, y_pred, labels=None):
     return matrix
 
 
-def precision_score(y_true, y_pred, average='binary', pos_label=1):
+def precision_score(y_true, y_pred, average="binary", pos_label=1):
     """
     Compute the precision score.
 
@@ -91,7 +91,7 @@ def precision_score(y_true, y_pred, average='binary', pos_label=1):
     y_true = np.asarray(y_true).ravel()
     y_pred = np.asarray(y_pred).ravel()
 
-    if average == 'binary':
+    if average == "binary":
         if len(np.unique(y_true)) > 2 and pos_label not in np.unique(y_true):
             raise ValueError("Binary precision requires binary labels or a specified pos_label.")
         tp = np.sum((y_pred == pos_label) & (y_true == pos_label))
@@ -105,20 +105,20 @@ def precision_score(y_true, y_pred, average='binary', pos_label=1):
         fp = np.sum((y_pred == label) & (y_true != label))
         scores.append(tp / (tp + fp) if (tp + fp) > 0 else 0.0)
 
-    if average == 'macro':
+    if average == "macro":
         return np.mean(scores)
-    elif average == 'micro':
+    elif average == "micro":
         tp = np.sum(y_pred == y_true)
         fp = np.sum(y_pred != y_true)
         return tp / (tp + fp) if (tp + fp) > 0 else 0.0
-    elif average == 'weighted':
+    elif average == "weighted":
         weights = np.array([np.sum(y_true == label) for label in labels])
         return np.average(scores, weights=weights)
     else:
         raise ValueError(f"Unknown average method '{average}'")
 
 
-def recall_score(y_true, y_pred, average='binary', pos_label=1):
+def recall_score(y_true, y_pred, average="binary", pos_label=1):
     """
     Compute the recall score.
 
@@ -136,7 +136,7 @@ def recall_score(y_true, y_pred, average='binary', pos_label=1):
     y_true = np.asarray(y_true).ravel()
     y_pred = np.asarray(y_pred).ravel()
 
-    if average == 'binary':
+    if average == "binary":
         tp = np.sum((y_pred == pos_label) & (y_true == pos_label))
         fn = np.sum((y_pred != pos_label) & (y_true == pos_label))
         return tp / (tp + fn) if (tp + fn) > 0 else 0.0
@@ -148,20 +148,20 @@ def recall_score(y_true, y_pred, average='binary', pos_label=1):
         fn = np.sum((y_pred != label) & (y_true == label))
         scores.append(tp / (tp + fn) if (tp + fn) > 0 else 0.0)
 
-    if average == 'macro':
+    if average == "macro":
         return np.mean(scores)
-    elif average == 'micro':
+    elif average == "micro":
         tp = np.sum(y_pred == y_true)
         fn = np.sum((y_pred != y_true) & (y_true != y_pred))
         return tp / (tp + fn) if (tp + fn) > 0 else 0.0
-    elif average == 'weighted':
+    elif average == "weighted":
         weights = np.array([np.sum(y_true == label) for label in labels])
         return np.average(scores, weights=weights)
     else:
         raise ValueError(f"Unknown average method '{average}'")
 
 
-def f1_score(y_true, y_pred, average='binary', pos_label=1):
+def f1_score(y_true, y_pred, average="binary", pos_label=1):
     """
     Compute the F1 score (harmonic mean of precision and recall).
 

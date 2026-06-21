@@ -1,4 +1,5 @@
 import numpy as np
+
 from epicon.losses.base import Loss
 
 
@@ -8,7 +9,7 @@ class CategoricalCrossEntropy(Loss):
     CATEGORICAL CROSS ENTROPY LOSS FUNCTION.
     ----------------------------------------
 
-    COMMONLY USED FOR MULTI-CLASS CLASSIFICATION PROBLEMS WHERE LABELS 
+    COMMONLY USED FOR MULTI-CLASS CLASSIFICATION PROBLEMS WHERE LABELS
     ARE ONE-HOT ENCODED.
 
     FORMULA: L = -Σ y_true * log(y_pred)

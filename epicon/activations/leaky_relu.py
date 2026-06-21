@@ -1,7 +1,9 @@
+from typing import override
+
 import numpy as np
-from typing import override, Dict
 
 from epicon.activations.base import Activation
+
 
 class LeakyReLU(Activation):
     """
@@ -36,7 +38,7 @@ class LeakyReLU(Activation):
         # For each element, if positive keep it; if negative, multiply by alpha
         self.output = np.where(inputs > 0, inputs, self.alpha * inputs)
         return self.output
-    
+
     def backward(self, dvalues):
         """
         The backward pass computes the gradient of the loss with respect to the inputs.
@@ -55,15 +57,9 @@ class LeakyReLU(Activation):
 
     @override
     def get_params(self):
-        return {
-            "type"  : "LeakyReLU",
-            "attrs" : {
-                "alpha": self.alpha
-            }
-        }
-    
+        return {"type": "LeakyReLU", "attrs": {"alpha": self.alpha}}
+
     @override
-    def set_params(self, params : Dict):
+    def set_params(self, params: dict):
         for key, val in params.items():
             setattr(self, key, val)
-        

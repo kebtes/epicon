@@ -1,6 +1,7 @@
 import numpy as np
 import pytest
-from epicon.preprocessing import StandardScaler, MinMaxScaler
+
+from epicon.preprocessing import MinMaxScaler, StandardScaler
 
 
 class TestStandardScaler:

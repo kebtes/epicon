@@ -1,5 +1,5 @@
 import numpy as np
-import pytest
+
 from epicon.layers import Dense
 from epicon.optimizers import Adam
 

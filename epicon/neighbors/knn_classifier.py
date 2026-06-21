@@ -42,7 +42,7 @@ class KNeighborsClassifier:
         array([0])
     """
 
-    def __init__(self, n_neighbors: int = 5, metric: str = 'euclidean', weights: str = 'uniform'):
+    def __init__(self, n_neighbors: int = 5, metric: str = "euclidean", weights: str = "uniform"):
         self.n_neighbors = n_neighbors
         self.metric = metric
         self.weights = weights
@@ -95,28 +95,28 @@ class KNeighborsClassifier:
             The predicted class label.
         """
         # Compute distances to all training points
-        if self.metric == 'euclidean':
+        if self.metric == "euclidean":
             distances = np.sqrt(np.sum((self.X_train - x) ** 2, axis=1))
-        elif self.metric == 'manhattan':
+        elif self.metric == "manhattan":
             distances = np.sum(np.abs(self.X_train - x), axis=1)
         else:
             raise ValueError(f"Unknown metric '{self.metric}'. Use 'euclidean' or 'manhattan'.")
 
         # Get k nearest neighbors
-        nearest_indices = np.argsort(distances)[:self.n_neighbors]
+        nearest_indices = np.argsort(distances)[: self.n_neighbors]
         nearest_labels = self.y_train[nearest_indices]
 
-        if self.weights == 'uniform':
+        if self.weights == "uniform":
             # Majority vote
             counts = np.bincount(nearest_labels.astype(np.int64))
             return np.argmax(counts)
-        elif self.weights == 'distance':
+        elif self.weights == "distance":
             # Inverse distance weighting
             k_distances = distances[nearest_indices] + 1e-15
             weights = 1.0 / k_distances
 
             weighted_votes = np.zeros(len(self.classes_), dtype=np.float64)
-            for label, weight in zip(nearest_labels, weights):
+            for label, weight in zip(nearest_labels, weights, strict=False):
                 idx = np.where(self.classes_ == label)[0][0]
                 weighted_votes[idx] += weight
 
@@ -136,15 +136,15 @@ class KNeighborsClassifier:
         """
         X = np.asarray(X, dtype=np.float64)
         probas = np.zeros((X.shape[0], len(self.classes_)))
-        n_classes = len(self.classes_)
+        len(self.classes_)
 
         for i in range(X.shape[0]):
-            if self.metric == 'euclidean':
+            if self.metric == "euclidean":
                 distances = np.sqrt(np.sum((self.X_train - X[i]) ** 2, axis=1))
             else:
                 distances = np.sum(np.abs(self.X_train - X[i]), axis=1)
 
-            nearest_indices = np.argsort(distances)[:self.n_neighbors]
+            nearest_indices = np.argsort(distances)[: self.n_neighbors]
             nearest_labels = self.y_train[nearest_indices]
 
             for label in nearest_labels:

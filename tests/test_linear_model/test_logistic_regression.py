@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+
 from epicon.linear_model import LogisticRegression
 
 
@@ -38,7 +39,7 @@ def test_logistic_regression_score(binary_data):
 
 def test_logistic_regression_l2_penalty(binary_data):
     X, y = binary_data
-    model = LogisticRegression(epochs=2000, C=0.1, penalty='l2')
+    model = LogisticRegression(epochs=2000, C=0.1, penalty="l2")
     model.fit(X, y)
     preds = model.predict(X)
     assert preds.shape == y.shape

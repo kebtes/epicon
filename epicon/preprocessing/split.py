@@ -48,7 +48,7 @@ def train_test_split(X, y, test_size=0.2, random_state=None):
         n_test = int(test_size)
 
     n_test = min(n_test, n_samples - 1)
-    n_train = n_samples - n_test
+    n_samples - n_test
 
     if random_state is not None:
         np.random.seed(random_state)

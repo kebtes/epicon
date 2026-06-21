@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+
 from epicon.linear_model import Ridge
 
 

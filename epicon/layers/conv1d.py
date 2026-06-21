@@ -2,6 +2,7 @@ import numpy as np
 
 from epicon.layers import Layer
 
+
 class Conv1D(Layer):
     def __init__(self, in_channels: int, out_channels: int, kernel_size: int, *, stride: int = 1, padding: int = 0):
         self.in_channels = in_channels
@@ -26,9 +27,9 @@ class Conv1D(Layer):
     def _pad_input(self, x):
         if self.padding == 0:
             return x
-        
-        return np.pad(x, ((0, 0), (0, 0), (self.padding, self.padding)), mode='constant')
-    
+
+        return np.pad(x, ((0, 0), (0, 0), (self.padding, self.padding)), mode="constant")
+
     def forward(self, x):
         self.input = x
         batch_size, _, input_width = x.shape
@@ -45,11 +46,11 @@ class Conv1D(Layer):
                     start = i * self.stride
                     end = start + self.kernel_size
 
-                    region = x_padded[b, :, start:end] # (in_channels, kernel_size)
+                    region = x_padded[b, :, start:end]  # (in_channels, kernel_size)
                     out[b, oc, i] = np.sum(region * self.weight[oc]) + self.bias[oc]
-        
+
         return out
-    
+
     def backward(self, doutput):
         batch_size, _, input_width = self.input.shape
         _, _, output_width = doutput.shape
@@ -65,15 +66,15 @@ class Conv1D(Layer):
                     start = i * self.stride
                     end = start + self.kernel_size
 
-                    self.dweights[oc] += doutput[b, oc, i] * self.input_padded[b, :, start: end]
+                    self.dweights[oc] += doutput[b, oc, i] * self.input_padded[b, :, start:end]
 
-                    dx_padded[b, :, start: end] += doutput[b, oc, i] * self.weight[oc]
+                    dx_padded[b, :, start:end] += doutput[b, oc, i] * self.weight[oc]
 
                 self.dbias[oc] += np.sum(doutput[b, oc, :])
-        
+
         if self.padding > 0:
-            self.dinputs = dx_padded[:, :, self.padding: - self.padding]
+            self.dinputs = dx_padded[:, :, self.padding : -self.padding]
         else:
             self.dinputs = dx_padded
-        
+
         return self.dinputs

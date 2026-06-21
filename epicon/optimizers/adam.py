@@ -15,11 +15,12 @@ Reference:
     Stochastic Optimization. arXiv:1412.6980.
 """
 
-import numpy as np
-from typing import Dict, override
+from typing import override
 
-from epicon.optimizers.base import Optimizer
+import numpy as np
+
 from epicon.layers.base import Layer
+from epicon.optimizers.base import Optimizer
 
 
 class Adam(Optimizer):
@@ -70,12 +71,8 @@ class Adam(Optimizer):
             self.cache[layer] = {
                 "m_weights": np.zeros_like(layer.weights),
                 "v_weights": np.zeros_like(layer.weights),
-                "m_biases": (
-                    np.zeros_like(layer.biases) if layer.biases is not None else None
-                ),
-                "v_biases": (
-                    np.zeros_like(layer.biases) if layer.biases is not None else None
-                ),
+                "m_biases": (np.zeros_like(layer.biases) if layer.biases is not None else None),
+                "v_biases": (np.zeros_like(layer.biases) if layer.biases is not None else None),
             }
 
         cache = self.cache[layer]
@@ -83,11 +80,11 @@ class Adam(Optimizer):
 
         # Update biased first and second moment estimates for weights
         cache["m_weights"] = self.beta1 * cache["m_weights"] + (1 - self.beta1) * layer.dweights
-        cache["v_weights"] = self.beta2 * cache["v_weights"] + (1 - self.beta2) * (layer.dweights ** 2)
+        cache["v_weights"] = self.beta2 * cache["v_weights"] + (1 - self.beta2) * (layer.dweights**2)
 
         # Bias correction
-        m_hat = cache["m_weights"] / (1 - self.beta1 ** t)
-        v_hat = cache["v_weights"] / (1 - self.beta2 ** t)
+        m_hat = cache["m_weights"] / (1 - self.beta1**t)
+        v_hat = cache["v_weights"] / (1 - self.beta2**t)
 
         # Update weights
         layer.weights -= self.current_learning_rate * m_hat / (np.sqrt(v_hat) + self.epsilon)
@@ -95,10 +92,10 @@ class Adam(Optimizer):
         # Update biases if they exist
         if layer.biases is not None:
             cache["m_biases"] = self.beta1 * cache["m_biases"] + (1 - self.beta1) * layer.dbiases
-            cache["v_biases"] = self.beta2 * cache["v_biases"] + (1 - self.beta2) * (layer.dbiases ** 2)
+            cache["v_biases"] = self.beta2 * cache["v_biases"] + (1 - self.beta2) * (layer.dbiases**2)
 
-            m_hat_b = cache["m_biases"] / (1 - self.beta1 ** t)
-            v_hat_b = cache["v_biases"] / (1 - self.beta2 ** t)
+            m_hat_b = cache["m_biases"] / (1 - self.beta1**t)
+            v_hat_b = cache["v_biases"] / (1 - self.beta2**t)
 
             layer.biases -= self.current_learning_rate * m_hat_b / (np.sqrt(v_hat_b) + self.epsilon)
 
@@ -119,10 +116,10 @@ class Adam(Optimizer):
                 "beta1": self.beta1,
                 "beta2": self.beta2,
                 "epsilon": self.epsilon,
-            }
+            },
         }
 
     @override
-    def set_params(self, params: Dict):
+    def set_params(self, params: dict):
         for key, val in params.items():
             setattr(self, key, val)

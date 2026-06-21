@@ -147,7 +147,7 @@ class GaussianNB:
             # log of Gaussian PDF: -0.5 * log(2 * pi * var) - (x - mean)^2 / (2 * var)
             diff = X - self.theta_[i]
             var = self.var_[i]
-            log_likelihood = -0.5 * np.log(2 * np.pi * var + 1e-15) - (diff ** 2) / (2 * var + 1e-15)
+            log_likelihood = -0.5 * np.log(2 * np.pi * var + 1e-15) - (diff**2) / (2 * var + 1e-15)
             joint_log_likelihood[:, i] += np.sum(log_likelihood, axis=1)
 
         return joint_log_likelihood

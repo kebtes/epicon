@@ -2,10 +2,10 @@
 ---------------------------------------------------------
                     BINARY CROSS-ENTROPY LOSS
 ---------------------------------------------------------
-The Binary Cross-Entropy (BCE) Loss is commonly used for binary classification problems, 
+The Binary Cross-Entropy (BCE) Loss is commonly used for binary classification problems,
 where the model predicts the probability of an instance belonging to a particular class.
 
-The BCE Loss computes the difference between the predicted probability (from the model) 
+The BCE Loss computes the difference between the predicted probability (from the model)
 and the actual label (either 0 or 1), using the following formula:
 
     L = -[y * log(p) + (1 - y) * log(1 - p)]
@@ -23,17 +23,18 @@ Attributes:
 
 Methods:
     forward(y_pred, y_true):
-        Computes the forward pass of the Binary Cross-Entropy loss function. This method 
+        Computes the forward pass of the Binary Cross-Entropy loss function. This method
         calculates the loss based on the predicted probabilities and the true labels.
-        
+
     backward(y_pred, y_true):
-        Computes the backward pass of the Binary Cross-Entropy loss function. This method 
-        calculates the gradient of the loss with respect to the predicted probabilities, 
+        Computes the backward pass of the Binary Cross-Entropy loss function. This method
+        calculates the gradient of the loss with respect to the predicted probabilities,
         which is used for backpropagation during training.
 ---------------------------------------------------------
 """
 
 import numpy as np
+
 from epicon.losses.base import Loss
 
 
@@ -63,9 +64,7 @@ class BinaryCrossEntropy(Loss):
             float: Mean binary cross-entropy loss over all samples.
         """
         y_pred = np.clip(y_pred, 1e-7, 1 - 1e-7)
-        self.output = -np.mean(
-            y_true * np.log(y_pred) + (1 - y_true) * np.log(1 - y_pred)
-        )
+        self.output = -np.mean(y_true * np.log(y_pred) + (1 - y_true) * np.log(1 - y_pred))
         return self.output
 
     def backward(self, y_pred, y_true):
@@ -87,14 +86,15 @@ class BinaryCrossEntropy(Loss):
     def set_threshold(self, threshold):
         if threshold > 1 or threshold < 0.0:
             raise ValueError("threshold value should be in between 0 and 1")
-        
+
         if threshold == 0:
             import warnings
 
             warnings.warn(
                 f"Threshold of {threshold} is unusual. Expected range is (0, 1). "
                 "This may result in incorrect predictions.",
-                category=UserWarning
+                category=UserWarning,
+                stacklevel=2,
             )
-        
+
         self._threshold = threshold

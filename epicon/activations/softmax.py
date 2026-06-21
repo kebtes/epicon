@@ -3,10 +3,10 @@
                     SOFTMAX ACTIVATION FUNCTION
 ---------------------------------------------------------
 The Softmax activation function converts a vector of raw scores (logits)
-into a probability distribution. It is commonly used as the activation 
+into a probability distribution. It is commonly used as the activation
 function in the output layer of a classification model.
 
-Given a vector of raw scores, the softmax function computes the 
+Given a vector of raw scores, the softmax function computes the
 probability for each class using the following formula:
 
     f(x_i) = exp(x_i) / sum(exp(x_j) for j in all classes)
@@ -14,8 +14,8 @@ probability for each class using the following formula:
 Where:
     - x_i is the raw score (logit) for class i.
     - f(x_i) is the probability of class i.
-    
-The function ensures that all the probabilities sum up to 1, making it suitable 
+
+The function ensures that all the probabilities sum up to 1, making it suitable
 for classification tasks where the model needs to output a probability distribution.
 
 Attributes:
@@ -26,16 +26,18 @@ Attributes:
 Methods:
     forward(inputs):
         Computes the forward pass of the softmax activation function.
-        
+
     backward(dvalues):
         Computes the backward pass, propagating gradients through the softmax function.
 ---------------------------------------------------------
 """
 
-import numpy as np
 from typing import override
 
+import numpy as np
+
 from epicon.activations.base import Activation
+
 
 class Softmax(Activation):
     def __init__(self):
@@ -59,13 +61,13 @@ class Softmax(Activation):
         # Sanity check to see if inputs are valid to work with
         if np.isnan(inputs).any() or np.isinf(inputs).any():
             raise ValueError("NaN values detected in Softmax output.")
-        
+
         # Subtract the max value for numerical stability
         # This won't cause any error as Softmax isn't scale dependent
         exponent_values = np.exp(inputs - np.max(inputs, axis=1, keepdims=True))
 
         probabilites = exponent_values / np.sum(exponent_values, axis=1, keepdims=True)
-        
+
         self.output = probabilites
         return self.output
 
@@ -89,7 +91,4 @@ class Softmax(Activation):
 
     @override
     def get_params(self):
-        return {
-            "type" : "Softmax",
-            "attrs" : {}
-        }
+        return {"type": "Softmax", "attrs": {}}
