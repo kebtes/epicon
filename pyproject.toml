@@ -29,6 +29,7 @@ classifiers = [
 ]
 dependencies = [
     "numpy>=1.21",
+    "tabulate>=0.8",
 ]
 
 [project.optional-dependencies]
