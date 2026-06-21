@@ -1,4 +1,6 @@
-# Epicon
+<p align="center">
+  <img src="BANNER.png" alt="Epicon banner" width="100%">
+</p>
 
 <p align="center">
   <a href="https://pypi.org/project/epicon/"><img src="https://img.shields.io/pypi/v/epicon" alt="PyPI"></a>
@@ -7,8 +9,7 @@
   <a href="https://github.com/kebtes/epicon/actions/workflows/test.yml"><img src="https://img.shields.io/github/actions/workflow/status/kebtes/epicon/test.yml?label=tests" alt="Tests"></a>
 </p>
 
-A **lightweight, from-scratch** machine learning library built on NumPy with
-optional Numba acceleration. Provides a unified API for neural networks
+[**EPICON**](https://epicon-web.vercel.app/), a **lightweight, from-scratch** machine learning library built on NumPy with optional Numba acceleration. Provides a unified API for neural networks
 **and** traditional ML models.
 
 Designed to be minimal yet capable — like **Flask for ML**.
