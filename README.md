@@ -1,7 +1,8 @@
-# Epicon
+<p align="center">
+  <img src="BANNER.png" alt="Epicon banner" width="100%">
+</p>
 
-A **lightweight, from-scratch** machine learning library built on NumPy with
-optional Numba acceleration. Provides a unified API for neural networks
+[**EPICON**](https://epicon-web.vercel.app/), a **lightweight, from-scratch** machine learning library built on NumPy with optional Numba acceleration. Provides a unified API for neural networks
 **and** traditional ML models.
 
 Designed to be minimal yet capable — like **Flask for ML**.
