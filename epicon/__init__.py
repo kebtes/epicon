@@ -34,7 +34,7 @@ from epicon.activations import Activation, LeakyReLU, ReLU, Sigmoid, Softmax, Ta
 # ---------------------------------------------------------------------------
 from epicon.datasets import load_iris, load_mnist, make_classification, make_regression
 from epicon.ensemble import RandomForestClassifier, RandomForestRegressor
-from epicon.layers import Conv1D, Dense, Dropout, Layer
+from epicon.layers import BatchNormalization, Conv1D, Conv2D, Dense, Dropout, Flatten, Layer, MaxPooling2D
 
 # ---------------------------------------------------------------------------
 # Traditional ML Models
@@ -55,7 +55,7 @@ from epicon.metrics import (
     r2_score,
     recall_score,
 )
-from epicon.models import Model, Sequential
+from epicon.models import EarlyStopping, Model, Sequential
 from epicon.naive_bayes import GaussianNB
 from epicon.neighbors import KNeighborsClassifier, KNeighborsRegressor
 from epicon.optimizers import Adam, GradientDescent, Momentum, Optimizer
