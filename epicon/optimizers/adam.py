@@ -15,8 +15,6 @@ Reference:
     Stochastic Optimization. arXiv:1412.6980.
 """
 
-from typing import override
-
 import numpy as np
 
 from epicon.layers.base import Layer
@@ -106,7 +104,6 @@ class Adam(Optimizer):
         self.iterations += 1
         self.current_learning_rate = self.learning_rate / (1.0 + self.decay * self.iterations)
 
-    @override
     def get_params(self):
         return {
             "type": "Adam",
@@ -119,7 +116,6 @@ class Adam(Optimizer):
             },
         }
 
-    @override
     def set_params(self, params: dict):
         for key, val in params.items():
             setattr(self, key, val)

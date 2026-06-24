@@ -1,5 +1,3 @@
-from typing import override
-
 import numpy as np
 
 from epicon.layers.base import Layer
@@ -69,7 +67,6 @@ class Dense(Layer):
         self.dinputs = np.dot(dvalues, self.weights.T)
         return self.dinputs
 
-    @override
     def get_params(self):
         return {
             "type": "Dense",
@@ -84,7 +81,6 @@ class Dense(Layer):
             },
         }
 
-    @override
     def set_params(self, params: dict):
         for key, val in params.items():
             # If the key is one of the specified attributes (e.g., "n_inputs", "n_neurons", etc.)

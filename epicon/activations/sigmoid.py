@@ -1,5 +1,3 @@
-from typing import override
-
 import numpy as np
 
 from epicon.activations.base import Activation
@@ -32,6 +30,5 @@ class Sigmoid(Activation):
         self.dinputs = dvalues * (self.output * (1 - self.output))
         return self.dinputs
 
-    @override
     def get_params(self):
         return {"type": "Sigmoid", "attrs": {}}

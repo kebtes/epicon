@@ -1,5 +1,3 @@
-from typing import override
-
 import numpy as np
 
 from epicon.layers.base import Layer
@@ -61,14 +59,12 @@ class Momentum(Optimizer):
             layer.biases -= self.learning_rate * bias_velocity
             self.velocities[layer]["biases"] = bias_velocity
 
-    @override
     def get_params(self):
         return {
             "type": "Momentum",
             "attrs": {"learning_rate": self.learning_rate, "decay": self.decay, "momentum": self.momentum},
         }
 
-    @override
     def set_params(self, params: dict):
         for key, val in params.items():
             setattr(self, key, val)

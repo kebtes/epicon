@@ -1,5 +1,3 @@
-from typing import override
-
 import numpy as np
 
 from epicon.activations.base import Activation
@@ -32,6 +30,5 @@ class ReLU(Activation):
         self.dinputs[self.inputs <= 0] = 0
         return self.dinputs
 
-    @override
     def get_params(self):
         return {"type": "ReLU", "attrs": {}}
