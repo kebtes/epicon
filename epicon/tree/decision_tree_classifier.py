@@ -27,15 +27,17 @@ class _Node:
         left (_Node): Left child node.
         right (_Node): Right child node.
         value (any): Predicted value (class) for leaf nodes.
+        counts (np.ndarray): Class counts at this node (leaf only).
         is_leaf (bool): Whether this node is a leaf.
     """
 
-    def __init__(self, feature_idx=None, threshold=None, left=None, right=None, value=None, is_leaf=False):
+    def __init__(self, feature_idx=None, threshold=None, left=None, right=None, value=None, counts=None, is_leaf=False):
         self.feature_idx = feature_idx
         self.threshold = threshold
         self.left = left
         self.right = right
         self.value = value
+        self.counts = counts
         self.is_leaf = is_leaf
 
 
@@ -151,7 +153,8 @@ class DecisionTreeClassifier:
 
         # Check stopping criteria
         if depth >= self.max_depth or n_samples < self.min_samples_split or len(np.unique(y)) == 1:
-            return _Node(value=self._most_common_class(y), is_leaf=True)
+            counts = np.bincount(y.astype(np.int64), minlength=self.n_classes_)
+            return _Node(value=self._most_common_class(y), counts=counts, is_leaf=True)
 
         # Determine which features to consider
         if self.max_features is None:
@@ -181,7 +184,8 @@ class DecisionTreeClassifier:
                 best_threshold = threshold
 
         if best_feature is None or best_threshold is None:
-            return _Node(value=self._most_common_class(y), is_leaf=True)
+            counts = np.bincount(y.astype(np.int64), minlength=self.n_classes_)
+            return _Node(value=self._most_common_class(y), counts=counts, is_leaf=True)
 
         # Split the data
         left_mask = X[:, best_feature] <= best_threshold
@@ -268,9 +272,9 @@ class DecisionTreeClassifier:
 
         for i in range(X.shape[0]):
             leaf = self._find_leaf(X[i], self.tree_)
-            # We stored the class distribution in the leaf value
-            # (best approximation: class with count 1 at that class index)
-            if leaf.is_leaf:
+            if leaf.is_leaf and leaf.counts is not None:
+                probas[i] = leaf.counts / np.sum(leaf.counts)
+            elif leaf.is_leaf:
                 probas[i, int(leaf.value)] = 1.0
 
         return probas
