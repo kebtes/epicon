@@ -13,6 +13,8 @@ prediction by computing distances to all training points.
 
 import numpy as np
 
+from epicon._jit import _knn_predict_single
+
 
 class KNeighborsClassifier:
     """
@@ -94,6 +96,9 @@ class KNeighborsClassifier:
         Returns:
             The predicted class label.
         """
+        if self.weights == "uniform":
+            return _knn_predict_single(x, self.X_train, self.y_train, self.n_neighbors, self.metric)
+
         # Compute distances to all training points
         if self.metric == "euclidean":
             distances = np.sqrt(np.sum((self.X_train - x) ** 2, axis=1))
@@ -106,23 +111,16 @@ class KNeighborsClassifier:
         nearest_indices = np.argsort(distances)[: self.n_neighbors]
         nearest_labels = self.y_train[nearest_indices]
 
-        if self.weights == "uniform":
-            # Majority vote
-            counts = np.bincount(nearest_labels.astype(np.int64))
-            return np.argmax(counts)
-        elif self.weights == "distance":
-            # Inverse distance weighting
-            k_distances = distances[nearest_indices] + 1e-15
-            weights = 1.0 / k_distances
+        # Inverse distance weighting
+        k_distances = distances[nearest_indices] + 1e-15
+        weights = 1.0 / k_distances
 
-            weighted_votes = np.zeros(len(self.classes_), dtype=np.float64)
-            for label, weight in zip(nearest_labels, weights, strict=False):
-                idx = np.where(self.classes_ == label)[0][0]
-                weighted_votes[idx] += weight
+        weighted_votes = np.zeros(len(self.classes_), dtype=np.float64)
+        for label, weight in zip(nearest_labels, weights, strict=False):
+            idx = np.where(self.classes_ == label)[0][0]
+            weighted_votes[idx] += weight
 
-            return self.classes_[np.argmax(weighted_votes)]
-        else:
-            raise ValueError(f"Unknown weights '{self.weights}'. Use 'uniform' or 'distance'.")
+        return self.classes_[np.argmax(weighted_votes)]
 
     def predict_proba(self, X):
         """

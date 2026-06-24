@@ -10,6 +10,8 @@ of the target values of its k nearest neighbors.
 
 import numpy as np
 
+from epicon._jit import _knn_predict_single
+
 
 class KNeighborsRegressor:
     """
@@ -88,6 +90,9 @@ class KNeighborsRegressor:
         Returns:
             float: Predicted value.
         """
+        if self.weights == "uniform":
+            return _knn_predict_single(x, self.X_train, self.y_train, self.n_neighbors, self.metric)
+
         if self.metric == "euclidean":
             distances = np.sqrt(np.sum((self.X_train - x) ** 2, axis=1))
         elif self.metric == "manhattan":
@@ -98,14 +103,9 @@ class KNeighborsRegressor:
         nearest_indices = np.argsort(distances)[: self.n_neighbors]
         nearest_values = self.y_train[nearest_indices]
 
-        if self.weights == "uniform":
-            return np.mean(nearest_values)
-        elif self.weights == "distance":
-            k_distances = distances[nearest_indices] + 1e-15
-            weights = 1.0 / k_distances
-            return np.average(nearest_values, weights=weights)
-        else:
-            raise ValueError(f"Unknown weights '{self.weights}'. Use 'uniform' or 'distance'.")
+        k_distances = distances[nearest_indices] + 1e-15
+        weights = 1.0 / k_distances
+        return np.average(nearest_values, weights=weights)
 
     def score(self, X, y):
         """
