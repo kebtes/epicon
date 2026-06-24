@@ -19,14 +19,14 @@ class Momentum(Optimizer):
     This implementation uses Polyak's method of updating parameters based on accumulated velocity.
     """
 
-    def __init__(self, learning_rate: float = 0.1, decay: int = 0, momentum: int = 0):
+    def __init__(self, learning_rate: float = 0.1, decay: float = 0.0, momentum: float = 0.0):
         """
         Initializes the Momentum optimizer with the given learning rate, decay, and momentum values.
 
         Args:
-            learning_rate (int, optional): The learning rate for parameter updates. Defaults to 0.1.
-            decay (int, optional): Learning rate decay factor (not used here). Defaults to 0.
-            momentum (int, optional): The momentum coefficient (typically between 0 and 1). Defaults to 0.
+            learning_rate (float): The learning rate for parameter updates. Defaults to 0.1.
+            decay (float): Learning rate decay factor. Defaults to 0.0.
+            momentum (float): The momentum coefficient (typically between 0 and 1). Defaults to 0.0.
         """
         super().__init__(learning_rate, decay)
         self.momentum = momentum
