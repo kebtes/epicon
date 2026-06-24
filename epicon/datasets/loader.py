@@ -36,11 +36,6 @@ def load_iris(return_X_y=False):
         >>> len(np.unique(y))
         3
     """
-    try:
-        import pandas as pd
-    except ImportError:
-        raise ImportError("pandas is required for loading Iris dataset. Install with: pip install pandas") from None
-
     # Look for the iris.csv in the resources directory
     base_path = Path(__file__).resolve().parent.parent.parent
     csv_path = base_path / "resources" / "iris" / "iris.csv"
@@ -48,6 +43,13 @@ def load_iris(return_X_y=False):
     if not csv_path.exists():
         # Fallback: hardcoded iris dataset
         return _fallback_iris(return_X_y)
+
+    try:
+        import pandas as pd
+    except ImportError:
+        raise ImportError(
+            "pandas is required for loading Iris dataset from CSV. Install with: pip install pandas"
+        ) from None
 
     df = pd.read_csv(csv_path)
 

@@ -116,7 +116,7 @@ class Sequential(Model):
         """
         self.set(loss=loss, optimizer=optimizer)
 
-    def fit(self, X, y, epochs=1, batch_size=None, shuffle=True, validation_split=0.0):
+    def fit(self, X, y, epochs=1, batch_size=None, shuffle=True, validation_split=0.0, callbacks=None, scheduler=None):
         """
         Train the model on data.
 
@@ -128,19 +128,16 @@ class Sequential(Model):
             shuffle (bool): Whether to shuffle data each epoch. Defaults to True.
             validation_split (float): Fraction of training data to use as
                                       validation set. Defaults to 0.0.
+            callbacks (list or None): List of callback objects. Defaults to None.
+            scheduler: Optional learning rate scheduler. Defaults to None.
         """
         self.shuffle = shuffle
-
-        if validation_split > 0:
-            split_idx = int(len(X) * (1 - validation_split))
-            X_train = X[:split_idx]
-            y_train = y[:split_idx]
-            X_val = X[split_idx:]
-            y_val = y[split_idx:]
-            self.train(X_train, y_train, epochs=epochs, batch_size=batch_size)
-            # Evaluate on validation set
-            val_output = self.forward(X_val)
-            val_loss = self.loss.calculate(val_output, y_val)
-            print(f"Validation loss: {val_loss:.6f}")
-        else:
-            self.train(X, y, epochs=epochs, batch_size=batch_size)
+        self.train(
+            X,
+            y,
+            epochs=epochs,
+            batch_size=batch_size,
+            validation_split=validation_split,
+            callbacks=callbacks,
+            scheduler=scheduler,
+        )
