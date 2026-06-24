@@ -30,8 +30,6 @@ Methods:
 ---------------------------------------------------------
 """
 
-from typing import override
-
 import numpy as np
 
 from epicon.activations.base import Activation
@@ -75,6 +73,5 @@ class Tanh(Activation):
         self.dinputs = dvalues * (1 - self.output**2)
         return self.dinputs
 
-    @override
     def get_params(self):
         return {"type": "Tanh", "attrs": {}}

@@ -32,8 +32,6 @@ Methods:
 ---------------------------------------------------------
 """
 
-from typing import override
-
 import numpy as np
 
 from epicon.activations.base import Activation
@@ -89,6 +87,5 @@ class Softmax(Activation):
         self.dinputs = dvalues  # usually combined with loss
         return self.dinputs
 
-    @override
     def get_params(self):
         return {"type": "Softmax", "attrs": {}}

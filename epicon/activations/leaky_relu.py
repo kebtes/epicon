@@ -1,5 +1,3 @@
-from typing import override
-
 import numpy as np
 
 from epicon.activations.base import Activation
@@ -55,11 +53,9 @@ class LeakyReLU(Activation):
         self.dinputs[self.inputs <= 0] *= self.alpha
         return self.dinputs
 
-    @override
     def get_params(self):
         return {"type": "LeakyReLU", "attrs": {"alpha": self.alpha}}
 
-    @override
     def set_params(self, params: dict):
         for key, val in params.items():
             setattr(self, key, val)

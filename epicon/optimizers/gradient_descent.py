@@ -1,5 +1,3 @@
-from typing import override
-
 from epicon.layers.base import Layer
 from epicon.optimizers.base import Optimizer
 
@@ -33,11 +31,9 @@ class GradientDescent(Optimizer):
         self.iterations += 1
         self.current_learning_rate = self.learning_rate / (1.0 + self.decay * self.iterations)
 
-    @override
     def get_params(self):
         return {"type": "GradientDescent", "attrs": {"learning_rate": self.learning_rate, "decay": self.decay}}
 
-    @override
     def set_params(self, params: dict):
         for key, val in params.items():
             setattr(self, key, val)
