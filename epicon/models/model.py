@@ -85,7 +85,9 @@ class Model:
         for i in reversed(range(len(self.layers) - 1)):
             self.layers[i].backward(self.layers[i + 1].dinputs)
 
-    def train(self, X, y, *, epochs=1, batch_size: int = None, validation_split: float = 0.0):
+    def train(self, X, y, *, epochs=1, batch_size: int = None,
+              validation_split: float = 0.0, callbacks: list | None = None,
+              scheduler=None):
         """
         Train the model using the provided data.
 
@@ -96,6 +98,12 @@ class Model:
             batch_size (int): Size of the training batches. Defaults to None.
             validation_split (float): Fraction of data to use for validation.
                                       Defaults to 0.0.
+            callbacks (list or None): List of callback objects with a
+                                      __call__(model, val_loss, epoch) -> bool
+                                      method. If a callback returns True,
+                                      training stops early. Defaults to None.
+            scheduler: Optional learning rate scheduler with a step(epoch) method.
+                       Defaults to None.
         """
 
         # Auto-infer input dimensions if first layer has default n_inputs (1)
@@ -162,13 +170,31 @@ class Model:
             step_progress.set_postfix(loss=avg_loss)
             step_progress.close()
 
+            # Learning rate scheduler step
+            if scheduler is not None:
+                scheduler.step(epoch)
+
             # Validation
+            val_loss = None
             if X_val is not None and y_val is not None:
                 val_output = self.forward(X_val)
                 val_loss = self.loss.calculate(val_output, y_val)
                 print(f"Loss: {avg_loss:.6f} - val_loss: {val_loss:.6f}")
             else:
                 print(f"Loss: {avg_loss}")
+
+            # Callbacks (e.g., early stopping)
+            if callbacks is not None:
+                stop_training = False
+                for cb in callbacks:
+                    if val_loss is not None:
+                        if cb(self, val_loss, epoch):
+                            stop_training = True
+                    else:
+                        if cb(self, avg_loss, epoch):
+                            stop_training = True
+                if stop_training:
+                    break
 
     def predict(self, X):
         """
