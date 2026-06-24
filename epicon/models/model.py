@@ -160,7 +160,7 @@ class Model:
 
             avg_loss = loss / steps
             step_progress.set_postfix(loss=avg_loss)
-            step_progress.update(1)
+            step_progress.close()
 
             # Validation
             if X_val is not None and y_val is not None:
@@ -390,7 +390,8 @@ class Model:
                 else:
                     ppc.append(0.0)
 
-        precision = np.mean(ppc)
+            precision = np.mean(ppc)
+
         return precision
 
     def get_model_attrs(self):
