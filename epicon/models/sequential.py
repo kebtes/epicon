@@ -132,6 +132,12 @@ class Sequential(Model):
             scheduler: Optional learning rate scheduler. Defaults to None.
         """
         self.shuffle = shuffle
-        self.train(X, y, epochs=epochs, batch_size=batch_size,
-                   validation_split=validation_split, callbacks=callbacks,
-                   scheduler=scheduler)
+        self.train(
+            X,
+            y,
+            epochs=epochs,
+            batch_size=batch_size,
+            validation_split=validation_split,
+            callbacks=callbacks,
+            scheduler=scheduler,
+        )

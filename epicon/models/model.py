@@ -85,9 +85,17 @@ class Model:
         for i in reversed(range(len(self.layers) - 1)):
             self.layers[i].backward(self.layers[i + 1].dinputs)
 
-    def train(self, X, y, *, epochs=1, batch_size: int = None,
-              validation_split: float = 0.0, callbacks: list | None = None,
-              scheduler=None):
+    def train(
+        self,
+        X,
+        y,
+        *,
+        epochs=1,
+        batch_size: int = None,
+        validation_split: float = 0.0,
+        callbacks: list | None = None,
+        scheduler=None,
+    ):
         """
         Train the model using the provided data.
 
